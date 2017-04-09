@@ -1,0 +1,159 @@
+\subsubsection{Data model classification}\label{sec:data-model-classification}
+
+Our survey shows that industrial data models specified with the same schema language have many similarities, such as data types, data structures, and object patterns being used within them.
+Therefore, in order to facilitate data model analysis, all data models are divided into three groups, namely (1) EXPRESS-based data models, (2) XSD-based data models, and (3) Tabular and relational data models (see \autoref{table:data-model-classification}).
+
+
+\begin{table}
+    \centering
+    \caption{Data model classification}
+    \begin{tabularx}{\columnwidth}{llll}
+        % \hline
+        %     Data model &
+        %     \specialcell[t]{EXPRESS-\\based} &
+        %     \specialcell[t]{XSD-\\based} &
+        %     \specialcell[t]{Tabular \&\\relational}
+        % \\
+        \hline
+            Data models &
+            EXPRESS- &
+            XSD- &
+            Tabular \&
+        \\
+             &
+            based &
+            based &
+            relational
+        \\
+        \hline
+            Schema languagse &
+            EXPRESS &
+            XSD &
+            \specialcell[t]{CSV,\\Spreadsheet,\\SQL}
+        \\            
+        \hline
+            Data formats &
+            \specialcell[t]{STEP-File\\(SPF),\\STEP-XML} &
+            XML &
+            \specialcell[t]{CSV,\\Spreadsheet,\\RDBMS}
+        \\            
+        \hline
+            Examples &
+            \specialcell[t]{IFC,\\COBie} &
+            \specialcell[t]{IFC,\\COBie,\\bsDD,\\MVD,\\CityGML,\\InfraXML,\\LandXML,\\private\\data\\formats} &
+            \specialcell[t]{COBie,\\private\\data\\formats}
+        \\
+        \hline
+    \end{tabularx}
+    \label{table:data-model-classification}
+\end{table}
+
+
+% \begin{tabularx}{\textwidth}{|X|X|X|}
+%   \hline
+%   foo   & bar    & fubar \\
+%   fubar & toobar & foo \\
+%   \hline
+% \end{tabularx}
+
+
+\textbf{1. EX\-PRESS-ba\-sed da\-ta mod\-els} have data schemas specified in EXPRESS language \cite{iso2004express} and their datasets are stored in STEP-File or STEP-XML formats.
+EXPRESS is a standard data modeling language for product data that is defined in ISO 10303-11 \cite{iso2004express}, a part of ISO 10303 Product data representation and exchange standard, as known as ISO STEP (Standard for the Exchange of Product model data).
+ISO STEP also specifies EXPRESS-G, a graphical notation for a subset of EXPRESS.
+An EXPRESS-based data model may have more than one schemas, each of which address a specific subdomain of the domain.
+These schemas may be related to each other via schema interfaces.
+STEP-File (STEP Physical File, SPF, or STEP) \cite{iso2016stepfile} and STEP-XML \cite{iso2007stepxml} are two data serialization formats, accordingly defined in ISO 10303-21 and ISO 10303-28.
+
+
+
+
+\textbf{2. XSD-\-ba\-sed da\-ta mod\-els} have data schemas specified in XSD (W3C XML Schema Definition) language and their datasets are stored in XML format.
+XSD is one of several XML schema languages; its latest version XSD 1.1 is published as a World Wide Web Consortium (W3C) Recommendation in 2012 \cite{gao2009w3c, peterson2009w3c}.
+
+
+
+\textbf{3. Tabular and relational data models} group have three subgroups.
+
+
+
+
+
+
+
+% \begin{enumerate}
+
+%     \item[G1] \emph{EXPRESS-based data models} contain data models defined in the data specification language EXPRESS. Their datasets are serialised 
+%     \item[G2] \emph{XSD-based data models}
+%     \item[G3] \emph{Tabular and relational data models}
+
+% \end{enumerate}
+
+% All three levels of each data model are analysed with regards to the conversion to OWL ontologies and RDF datasets: the data schema definition language, the data schema, and the dataset.
+
+
+
+
+
+
+
+
+
+
+% Below are several typical examples, which are official or de-facto standards:
+
+
+
+
+
+
+
+
+
+% \textbf{Model View Definition XML (mvdXML)}...
+
+
+
+
+
+
+
+
+
+% \textbf{City Geography Markup Language (CityGML)}...
+
+
+
+
+
+% The scope of the research interest includes a small, but central part among plenty of structured data models used in the AEC/FM industry.
+
+% Currently, the AEC/FM industry plenty of structured data models, which have schemas specified in different definition languages and which can be serialised in multiple formats.
+
+
+
+    
+
+
+
+
+
+
+% \subsubsection{Typical examples}\label{building-data-formats-examples}
+
+
+% Currently, the AEC/FM industry uses plenty of structured data models, which have schemas specified in different definition languages and which can be serialised in multiple formats.
+% Below are superficial introductions of several open and commonly used data models, with focus to the "pure" data content.
+% % data, but not the application level.
+% As can be seen, only few conceptual data models already involve many schema definition languages and serialization formats.
+
+
+
+
+
+
+
+% ...
+
+
+
+

@@ -1,0 +1,91 @@
+\subsection{Target criteria}
+
+\textbf{Requirement to input data models}
+...
+
+
+\textbf{Requirement to output data formats}
+...
+
+\textbf{Conversion schema}
+
+
+
+
+\subsection{Data models comparison}
+
+
+
+
+
+% The analysis of the simple and well-defined data models, used in the AEC/FM industry and described in Section \ref{sec:state-of-the-art}, shows that in spite of their different nature, they have a lot of similarities.
+
+In this subsection, the \emph{"pure"} data part of the \emph{simple} and \emph{well-defined} data models, used in the \emph{AEC/FM industry} and described in Section \ref{sec:state-of-the-art}, are compared to each other.
+"Pure" data means the static and most important information content needed for data exchange in the industry.
+Examples of "dirty" data are: worksheets and text styles in spreadsheet formats, derived attributes, functions and rules in the EXPRESS data schemas.
+"Simple" data models do not contain complex elements, such as \texttt{mixed} elements in XSD (see subsection \ref{sec:xsd-based-data-models}), \texttt{BAG}-aggregation data types in EXPRESS (see subsection \ref{sec:express-based-data-models}) or \texttt{image} in relational databases.
+"Well-defined" data models are designed by qualified researchers and engineers, using the latest computer science trends and data modeling best practices.
+The data models used outside the industry are unpredictable, for instance, their entities may not contain unique keys for linking.
+Therefore, data models, which are complicated, or "poorly" designed, or unused in the industry, are outside the scope of the research.
+In general, all the mentioned restrictions help to ensure that the data models are \emph{predictable} and probably can be mapped to the dynamic data model, specified in Section 3.2.
+
+
+
+
+
+In spite of different nature of the EXPRESS-based, the XSD-based, and the relational data models groups, these data models have two significant similarities:
+
+\begin{enumerate}
+
+\item
+These data models can be mapped in a certain way to an \emph{object} model. All EXPRESS-based data models are object models by definition. Most of XSD schemas are designed on top of a conceptual model, which involves two basic relationships between different "concepts": \emph{inheritance} and \emph{association}.
+The whole-part relationships (aggregations in UML), often used in XSD/XML, are special cases of associations.
+These "concepts" are reflected in certain XSD elements and can be "restored" from the XSD to be classes.
+In tabular or relational data, each table can be considered as a class, which has associations with other classes.
+
+\item
+Most of \emph{single data records} in datasets of these data models can be considered as entity instances.
+Examples of single data records are: single lines in SPF, rows in tabular and relational data, or XSD-elements in XML.
+However, 
+
+
+\item
+All primitive data types used in the data models are related to the following groups: strings, integers, decimals, logicals, binaries, and date-times.
+
+
+Entity types are similar to classes in OOP.
+Rows in SPF, CSV, spreadsheets and relational databases, or XSD-elements in XML are samples of single data records. 
+Rows in SPF are instances of entity types by definition.
+\end{enumerate}
+First, \emph{most} (not all) of 
+In case of tabular and relational data models, the table names can be used to define entity types.
+Second, these classes have attributes, but no operations.
+Like in EXPRESS or OWL, and unlike traditional OOP, each attribute may have multiple value.
+
+
+
+
+Third, there are only two basic relationships between these classes, namely inheritance and association.
+Each class has only one superclass. 
+
+
+... In the Sections ..., we analyse in details each group of data models, which parts of them can or cannot be converted into OWL and RDF.
+
+
+% (4) each attribute 
+
+% The main difference between such a class diagram and an object model in traditional object-oriented programming (OOP) languages is that it allows attributes to have multiple values, similarly to properties in OWL languages (see...).
+
+
+
+% Firstly, all simple data types are related to one of the following groups: strings, integers, decimals, enumerations, calendar, and logical. 
+
+
+
+
+% The specific features of the data schemas to be ignored, for instance, are: functions, derived attributes and rules in EXPRESS; ... in XSD; data about workbooks, worksheets, text style and so on in Spreadsheets.
+
+
+
+
+

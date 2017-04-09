@@ -1,0 +1,260 @@
+\section{Introduction}\label{introduction}
+
+
+
+Nowadays, in the Architecture, Engineering, Construction and Facility Management (AEC/FM) industry, problems of integrating, accessing and reasoning over \emph{big building-related data}, which is dynamic, interrelated, heterogeneous and fragmented, is crucial.
+Throughout the life cycle of a building in modern AEC/FM projects, different parties (people and automatic systems) are involved in producing and utilizing vast volume of information about the building, including both structured and non-structured data.
+Our research focuses on the structured building-related data, denoted here for brevity as \emph{building data}.
+Building datasets are often developed separately and concurrently, with variable change frequencies depending on their domains and the ongoing life cycle phase.
+For instance, during the facility management stage, the 3D architectural model of the building is unchangeable while the sensor data about its indoor environment is updated every few minutes.
+Most of the conceptual data schemas and datasets are semantically interrelated (directly or indirectly) because they describe various aspects about the same or similar physical objects, however, they are mainly disintegrated and managed in a fragmented manner.
+Moreover, the significant increase in the number of data schemas and serialization formats also made exchanging, integrating or linking data between parties much harder. 
+In general, the relevant building data is difficult to access, disconnected from potential users and related systems, and remains underutilized. \cite{torma2012distributed}.
+
+
+
+
+
+Building Information Modeling (BIM), one of the most notable efforts in recent years regarding AEC/FM information management, can solve only a part of the mentioned problems.
+BIM appeared as a new approach "in which a digital representation of the building process is used to facilitate the exchange and interoperability of information" \cite{eastman2011bim} and now turned into a standard process a many countries.
+One of major innovations of BIM is the Industry Foundation Classes (IFC) standard, developed by buildingSMART and is currently widely used.
+...
+....
+
+
+
+is a fast developing 
+
+
+
+appeared as a new approach to 
+
+aims to facilitate the data exchange and interoperability, 
+
+a new approach for AEC/FM information management \cite{eastman2011bim}, has appeared and quickly turned into a standard process in 
+
+many countries. 
+Although in BIM, many native data formats must be translated into a common text format called \emph{Industry Foundation Classes (IFC)} \cite{liebich2016ifc4} 
+
+data exchange, which, however, is still file-based and problematic due to big sizes of datasets. 
+
+
+even after the rise of Building Information Modeling (BIM), 
+
+
+Within Building Information Modeling (BIM) \cite{eastman2011bim}, a fast developing standard process for construction information management during the last years, many native data formats are translated into a common text format called \emph{Industry Foundation Classes (IFC)} \cite{liebich2016ifc4} to the facilitate data exchange, which, however, is still file-based and problematic due to big sizes of datasets. 
+
+
+
+
+Linked Building Data, or Web of Building Data, is an emerging trend of using the Semantic Web and Linked Data technologies to address the mentioned data management problems in the AEC/FM industry.
+On the one hand, the Semantic Web provides standards and related tools for representing and querying data,
+(i) by defining Resource Description Framework (RDF) as a universal data format,
+(ii) by specifying schema languages such as Web Ontology Language (OWL) for adding rich semantics to the data,
+and (iii) by constructing SPARQL, a standard query language for RDF \cite{polleres2013rdfs}.
+Moreover, the Semantic Web offers rule languages, rule-based inferencing engines and other mechanisms for reasoning, i.e. "deriving facts that are not expressed explicitly in machine-readable ontologies or knowledge bases" \cite{sikos2015mastering}.
+On the other hand, Linked Data establishes a set of core principles and best practices for publishing structured data on the Web as interlinked RDF graphs.
+The core principles are simple: use HTTP URIs to name things, return RDF about those things when their URIs are looked up, and include links to related RDF documents elsewhere on the Web \cite{bizer2009linked, hogan2014linked, polleres2013rdfs}.
+By applying simultaneously the Semantic Web standards and the Linked Data principles and best practices, Linked Building Data allows the building data to be effectively deployed on the Web in a manner that facilitates their discovery and interoperability.
+
+
+
+
+One of the first major steps to enable Linked Building Data is conversion of IFC data models and data into OWL ontologies and RDF datasets correspondingly.
+The IFC data model is a platform neutral and open file format specification, commonly used collaboration format in BIM.
+The conceptual data schema of IFC, developed by buildingSMART, is object-based and can be specified either in \emph{EXPRESS}, a standard data modeling language for product data, or in the W3C XML Schema Definition language (XSD).
+EXPRESS is defined in ISO 10303, which is informally known as \emph{"STEP"} (Standard for the Exchange of Product model data).
+IFC data in turn can be serialized in different file formats, namely IFC-SPF, IFC-XML, or IFC-ZIP.
+IFC-SPF and IFC-XML are based on two STEP text formats, called \emph{STEP-file} (or \emph{STEP Physical File}) and \emph{STEP-XML} accordingly. 
+IFC-ZIP is a ZIP compressed format consisting of an embedded IFC-SPF.
+All BIM tools, such as Revit, ArchiCAD or Tekla, in addition to their native data formats, must be able to produce and utilize one or more IFC data formats.
+In order to be used in Linked Building Data, according to the Semantic Web and Linked Data principles, the IFC data schemas (there are several versions) must be converted into OWL ontologies (RDFS is not used because it provides poor semantics and it is included in OWL profiles), and IFC data files must be translated into RDF datasets consistent with the OWL ontologies.
+
+
+
+
+In 2015, a set of guidelines for the IFC-EXPRESS-to-OWL and IFC-SPF-to-RDF conversion processes was established, and later one of the resulting \emph{ifcOWL} ontology variations was assigned by buildingSMART a bSI Candidate Standard status, despite certain disadvantages.
+At the 3rd Linked Data in Architecture and Construction Workshop (LDAC2015), different approaches of the IFC-to-RDF conversion, presented in \cite{pauwels2016express, vu2015implementation, vu2014opening}, were compared and merged in order to form conversion guidelines for generating the only \emph{one} ifcOWL ontology for each IFC data schema version (aka. IFC specification)\cite{pauwels2015third}.
+This ontology must contain \emph{all} possible data type restrictions that describe the original IFC data schema and are allowed in OWL 2 DL, one of the most powerful profiles of the OWL 2 Web Ontology Language (informally OWL 2) in term of expressiveness.
+As pointed out in \cite{pauwels2016express}, "the disadvantage behind this decision is that the resulting ifcOWL ontology will imply sacrifices in terms of performance, in particular reasoning performance".
+Moreover, in spite of semantic richness of OWL 2 DL, data type restrictions in OWL are rarely and hardly used for data validation due to the Open World Assumption (OWA), mainly used in the Semantic Web, opposite to traditional programming environments which prefer the Closed World Assumption (CWA), according to which what is not known to be \texttt{true}, must be considered as \texttt{false}.
+Unfortunately, the compliance with the Linked Data principles and some other issues were also not taken into account when making the conversion guidelines.
+Therefore, produced \emph{ifcRDF} datasets may be unpublishable in Linked Data or useless in terms of linking with other datasets, for instance, if they contain blank nodes, i.e. resources without URIs, or unstable URIs, which refer to different "things" in distinct versions.
+Nevertheless, the resulted ifcOWL ontology of one of IFC-EXPRESS-to-OWL converters, which was made by P.Pauwels and W.Terkaj \cite{pauwels2016express} according to the conversion guidelines, was approved as a bSI Candidate Standard and is currently used as a recommended version in the W3C Linked Building Data (W3C-LBD) community.
+
+
+
+
+
+Practice shows that the multilayering ontology approach proposed and implemented by us in \cite{vu2015implementation} and also presented at LDAC2015 is more rational.
+This approach, compared to the case with an all-in-one ifcOWL ontology as the only ontology, facilitates more real-world scenarios, from querying and reasoning with Semantic Web technologies to publishing and linking datasets with Linked Data technologies.
+The key idea is to generate:
+(i) \emph{several} {ifcOWL} variations for each IFC data schema version, so that users can switch between different OWL 2 profiles when needed;
+and (ii) in the same time only \emph{one} {ifcRDF} dataset for each IFC data file.
+These {ifcOWL} variations are subsets of each other and named as layers.
+The \emph{ifcOWL-Simple}, \emph{ifcOWL-Standard}, and \emph{ifcOWL-Extended} layers are compatible with the OWL 2 EL, OWL 2 RL, and OWL 2 DL profiles accordingly; where ...
+% the lightweight OWL 2 EL profile, more complex OWL 2 RL profile, and OWL 2 DL, the most complicated profile after OWL 2 Full.
+The user choice of an ifcOWL layer depends on the task requirements and the tools used because different reasoners support different OWL profiles \cite{w3c2017owlimplementations, manchester2017reasoners}, while simple querying with SPARQL or linking datasets throught URIs do not require any ontology.
+On the one hand, the requirement of ....
+Certainly, the only ifcRDF dataset for each IFC data file must be compatible with all ifcOWL layers and, consequently, all OWL 2 profiles in which they belong.
+This requirement ensures that the ifcRDF dataset can be used for all tasks without re-conversion, but it also involves certain restrictions.
+In particular, the use of datatypes \texttt{xsd:double}, \texttt{xsd:boolean} and anonymous individuals (blank nodes) must be avoided, because they are not allowed in OWL 2 EL.
+To ensure flexibility, our dual IFC-EXPRESS-to-OWL and IFC-SPF-to-RDF converter supports configuration options, to enable the users, in case they know exactly the application scope of the ifcRDF datasets, to force the converter not naming every object with an URI.
+This converter has been tested successfully in many proof-of-concept projects of Linked Building Data with different objectives: from information extraction to linking data.
+
+
+
+
+In addition to IFC-EXPRESS data schemas and IFC-SPF data files, there are many data formats used in the AEC/FM insdustry, which can be divided into five different categories, which, however, have similar properties.
+
+% SPF, XML, CSV, Spreadsheets, and relational databases.
+
+
+
+
+
+
+
+
+% % OWL 2 DL is a profile of the OWL 2 Web Ontology Language (informally OWL 2), which supports so called Description Logic (DL) and is a superset of other profiles, namely OWL 2 EL, OWL 2 QL, and OWL 2 RL (see Figure 1).
+% % None of these profiles can construe very specific EXPRESS language terms such as functions, derived attributes and rules.
+% % Thus, the main focus was to build an \emph{all-in-one} ontology using the full expressive power of OWL 2 DL, ignoring the computational complexity it involves.
+% % Moreover, 
+
+
+% , which can be considered as guidelines,
+
+
+
+
+
+
+
+% % However, typical reasoning tasks over ontologies described in the unrestricted OWL (2) Full language are undecidable, i.e. they cannot be guaranteed to ever terminate \cite{hogan2014linked, motik2009owl}.
+% Last but not least, the guideline was incomplete and left many issues open. 
+% The decision to remain in OWL 2 DL, 
+
+% In spite of this and other drawbacks, pointed in Chapter 2.2, the result ifcOWL ontology was later accepted by buildingSMART as a Candidate Standard and .
+
+
+
+
+
+
+
+% Only IFC-EXPRESS data schemas and IFC-SPF files, which are most widely used in BIM, were taken into account as the inputs of the conversion.
+% As result, the formed a fundamental conversion guideline 
+
+% convert only particular data formats and to 
+
+
+% Practice shows that some solutions proposed by us in ... and presented but was not taken into account seriously in LDAC2015 
+
+
+
+% % In general, the agreed principle list do not solve 
+% % leave many open questions such as whether to use super properties in so called Drummond 
+% % As result, 
+
+
+
+
+
+% % The practice shows that many the ideas 
+
+
+
+
+
+
+
+
+% % In 2015, the Linked Building Data community made some agreements 
+
+
+
+% % By default, an IFC data file is converted to one separate ifcRDF dataset.
+
+
+
+
+
+
+% % building data, especially IFC models, into RDF.  
+
+
+
+% % ...  is Linked Building Data (LBD)
+
+% % The main data formats in BIM are:
+
+% % The main challenges/requirements are
+
+% % One of the first steps to enable Linked Building Data is converting different kinds of data schemas and datasets into OWL ontologies and RDF datasets. IFC, EXPRESS, XSD, XML.
+
+% % In 2015, the LBD community IFC-to-RDF .... was accepted as buildingSMART adaf 
+% % LDAC 2015, Because the main focus was to provide an ontology: which is (a) describes as much. Therefor, many proposals from [] were ignored by the community:... Moreover, many issues remained open: blank nodes, adfadfadf 
+
+% % This violates recommendations of (W3C), (Aidan Hogan): ....
+
+% % The practical real-world scenario also showed....
+
+% % In this paper, (chapter by chapter) 
+
+% % In Chapter 2, we redefine the requirements...., analyze the problems of OWL, ...
+
+
+
+
+
+
+
+
+
+
+% % ; however, the using the Web-of-Data technologies can solve many of them.
+% % Over the lifecycle of a building, different parties involved produce and utilize more and more data.
+% % Unfortunately, these building-related data have different formats, are fragmented into separate information silos, and are difficult to link on both logical and physical levels. The authors in (Beetz 2009a, Beetz et al 2009b, Pauwels et al 2011, Törmä 2013, Törmä 2014) proposed to use the Web-of-Data technologies, i.e., the combination of Semantic Web and Linked Data, to address the problems. Today this approach is getting very popular, since it gives significant potential benefits:
+% % •	the data about individual building objects could be accessed in a granular fashion;
+% % •	the online access brings the same, most recent version of the data available for all parties;
+% % •	data management can be distributed according to the structure of any project consortium;
+% % •	the semantic description of data enables the automation of workflows and reasoning tasks;
+% % •	and possibilities of cross-dataset linking allow the integration of data from multiple datasets based on the needs of use cases.
+
+
+
+% % \TODO{(Conclusion sentence?)}
+
+ 
+
+
+
+
+% % \highlight{
+% %  - SPF (Standard for the exchange of product model data Physical File)\\
+% %  - At the 3rd International Workshop on Linked Data in Architecture and Construction (LDAC 2015), the researchers \\
+% %  -  based on our theoretical analysis and practical use\\
+% %  - whether it is possible and how to...\\
+% %  - IFC is is commonly used collaboration format in Building Information Modeling (BIM) based projects, 
+% %  - the Java object model allows to represent almost all kind of object-oriented data used in industry and then convert them to RDF with minimum possible loses. Therefore ...\\
+% % - enough to write a plugin to convert data then convert\\
+% % - this tool can be also used for any other industrial object-oriented data formats, not only in the Built Environment. \\
+% % - COBie (Construction Operations Building Information Exchange), bsDD (buildingSMART Data Dictionary), \\
+% % - IFC-ZIP (compressed IFC-SPF)\\
+% % - The buildingSMART community accepts the generated ifcOWL ontologies as Candidate Standards.\\
+% % - the software can be used stand-alone or as part of other systems
+% % }
+
+
+
+
+...
+
+
+
+\footnote{
+In literature concerning high-level BIM, the abbreviation \emph{IFC} most often means the IFC-STEP data format and sometimes the IFC data schema (without regard to the schema definition language and version).
+However, depending on the context, it may also indicate the conceptual model, the standard specification, or the data framework related to IFC.
+Therefore, in this paper, certain combinations of abbreviations are used to avoid ambiguity: for instance, IFC-EXPRESS, IFC-XSD, ifcOWL, ifcRDF, etc.
+At the same time, such terms like \emph{ifcXML}, which may refer both to a data schema or a serialization format, are avoided.
+}
