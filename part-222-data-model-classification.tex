@@ -1,60 +1,47 @@
 \subsubsection{Data model classification}\label{sec:data-model-classification}
 
 Our survey shows that industrial data models specified with the same schema language have many similarities, such as data types, data structures, and object patterns being used within them.
-Therefore, in order to facilitate data model analysis, all data models are divided into three groups, namely (1) EXPRESS-based data models, (2) XSD-based data models, and (3) Tabular and relational data models (see \autoref{table:data-model-classification}).
+Therefore, in order to facilitate data model analysis, all data models are divided into three groups, namely (1) EXPRESS-based data models, (2) XSD-based data models, and (3) Tabular and relational data models (see \autoref{tab:data-model-classification}).
 
 
-\begin{table}
+\begin{table}\footnotesize
     \centering
     \caption{Data model classification}
-    \begin{tabularx}{\columnwidth}{llll}
-        % \hline
-        %     Data model &
-        %     \specialcell[t]{EXPRESS-\\based} &
-        %     \specialcell[t]{XSD-\\based} &
-        %     \specialcell[t]{Tabular \&\\relational}
-        % \\
+    
+    \rowcolors{2}{white}{lightgray}
+    
+    
+    \begin{tabulary}{\columnwidth}{p{0.2\columnwidth}p{0.2\columnwidth}p{0.2\columnwidth}p{0.2\columnwidth}}
         \hline
-            Data models &
-            EXPRESS- &
-            XSD- &
-            Tabular \&
-        \\
-             &
-            based &
-            based &
-            relational
+        % \rowcolor{lightgray}
+            Data models      &
+            EXPRESS-based   &
+            XSD-based       &
+            Tabular \& \newline relational
         \\
         \hline
-            Schema languagse &
-            EXPRESS &
-            XSD &
-            \specialcell[t]{CSV,\\Spreadsheet,\\SQL}
-        \\            
-        \hline
+            Schema \newline languages &
+            EXPRESS & XSD   &
+            CSV, \newline Spreadsheet, \newline SQL
+        \\
             Data formats &
-            \specialcell[t]{STEP-File\\(SPF),\\STEP-XML} &
+            STEP-File (SPF),    \newline STEP-XML &
             XML &
-            \specialcell[t]{CSV,\\Spreadsheet,\\RDBMS}
+            CSV, \newline   Spreadsheet,    \newline RDBMS
         \\            
-        \hline
-            Examples &
-            \specialcell[t]{IFC,\\COBie} &
-            \specialcell[t]{IFC,\\COBie,\\bsDD,\\MVD,\\CityGML,\\InfraXML,\\LandXML,\\private\\data\\formats} &
-            \specialcell[t]{COBie,\\private\\data\\formats}
+            Related \newline conceptual \newline models   &
+            IFC, \newline COBie &
+            IFC, \newline COBie, \newline bsDD, \newline MVD, \newline CityGML, \newline InfraXML, \newline LandXML, \newline internal \newline data \newline formats &
+            COBie, \newline internal \newline data \newline formats
         \\
         \hline
-    \end{tabularx}
-    \label{table:data-model-classification}
+    \end{tabulary}
+    \label{tab:data-model-classification}
 \end{table}
 
 
-% \begin{tabularx}{\textwidth}{|X|X|X|}
-%   \hline
-%   foo   & bar    & fubar \\
-%   fubar & toobar & foo \\
-%   \hline
-% \end{tabularx}
+
+
 
 
 \textbf{1. EX\-PRESS-ba\-sed da\-ta mod\-els} have data schemas specified in EXPRESS language \cite{iso2004express} and their datasets are stored in STEP-File or STEP-XML formats.
@@ -67,93 +54,55 @@ STEP-File (STEP Physical File, SPF, or STEP) \cite{iso2016stepfile} and STEP-XML
 
 
 
-\textbf{2. XSD-\-ba\-sed da\-ta mod\-els} have data schemas specified in XSD (W3C XML Schema Definition) language and their datasets are stored in XML format.
-XSD is one of several XML schema languages; its latest version XSD 1.1 is published as a World Wide Web Consortium (W3C) Recommendation in 2012 \cite{gao2009w3c, peterson2009w3c}.
+\textbf{2. XSD-\-ba\-sed da\-ta mod\-els} have data schemas specified in XSD (W3C XML Schema Definition) language and their datasets are stored in XML (eXtensible Markup Language) format.
+Unlike other schema languages for XML, XSD achieved Recommendation status within the World Wide Web Consortium (W3C) in 2001 .
+Its latest version XSD 1.1 \cite{gao2009w3c, peterson2009w3c}, published as a W3C Recommendation in 2012, is especially popular for industrial data models.
+Another schema language for XML called RELAX NG (REgular LAnguage for XML Next Generation), an ISO standard, is less popular than XSD and is not analysed here.
 
 
 
-\textbf{3. Tabular and relational data models} group have three subgroups.
 
+\textbf{3. Tabular and relational data models} have data represented in tabular form, i.e. tables with rows and columns.
+While tabular data is stored in files, relational data is stored in relational data base management systems (RDBMS).
 
+Tabular data is exchanged in a variety of formats, such as CSV (comma-separated values) format, tab-delimited format, fixed field format, spreadsheets, HTML tables, and SQL dumps.
+CSV (comma-separated values) format is a common data exchange format widely used in scientific applications, however, there are many variants of CSV.
+Currently, there are two notable efforts on standardising CSV:
+In 2015, W3C published a Recommendation, which defines an abstract tabular data model and specifies so called Best Practice CSV for expressing that tabular data model \cite{tennison2015tabular}.
+At the same time, The National Archives (United Kingdom) developed and published the specification of the CSV Schema Language 1.1 \cite{retter2016csv}.  
+Spreadsheets are popular among practitioners who use spreadsheet tools, such as Microsoft Excel or Open Office, for analysing data.
+There are many spreadsheet formats, for instance, OpenDocument Spreadsheet (.ods), Microsoft Excel (.xlsx), XML Spreadsheet (SpreadsheetML).
 
 
+Relational data schema is specified with SQL....
 
 
 
-% \begin{enumerate}
+Below are short descriptions of data model examples mentioned in \autoref{tab:data-model-classification}.
+As can be seen, one conceptual model, such as IFC or COBie, can be related to several data model groups.
 
-%     \item[G1] \emph{EXPRESS-based data models} contain data models defined in the data specification language EXPRESS. Their datasets are serialised 
-%     \item[G2] \emph{XSD-based data models}
-%     \item[G3] \emph{Tabular and relational data models}
 
-% \end{enumerate}
+\textbf{IFC (Industry Foundation Classes)} is a platform neutral and open product data model, and is the most extensively utilized collaboration data format in BIM.
+IFC is developed and published by buildingSMART as openBIM standard IFC (equivalent to ISO 13739:2013) \cite{iso2013ifc}.
+Currently, two IFC specifications are officially in use: IFC2x3 TC1 \cite{liebich2007ifc2x3} and IFC4 Add2 \cite{liebich2016ifc4}, because the number of BIM software applications and software vendors granted with IFC4 certification is very little comparing with the ones with IFC2x3 certification.
+Each IFC specification include the IFC Product data model (IFC Object model) in several languages: EXPRESS, EXPRESS-G, and XSD \cite{liebich2007ifc2x3, liebich2016ifc4}.
+IFC-EXPRESS and IFC-XSD are \emph{almost} equivalent; their distinction is discussed in \autoref{sec:xsd-based-models}.
+IFC datasets can be serialised in different file formats, namely IFC-SPF (IFC-STEP), IFC-XML (ifcXML), or IFC-ZIP (ifcZIP).
+IFC-SPF datasets are based on STEP-file format and conform to IFC-EXPRESS schema.
+Similarly, IFC-XML datasets are based on STEP-XML format and conform to IFC-XSD schema.
+IFC-ZIP is a ZIP compressed format consisting of an embedded IFC-SPF.
+In addition to the IFC Object model in formal languages, an IFC specification, i.e. an IFC Release documentation, also contain semantic explanations in informal languages, and IFC Property Set definitions (PSDD) in XSD (see details in \ref{sec:xsd-based-models}).
 
-% All three levels of each data model are analysed with regards to the conversion to OWL ontologies and RDF datasets: the data schema definition language, the data schema, and the dataset.
 
-
-
-
-
-
-
-
-
-
-% Below are several typical examples, which are official or de-facto standards:
-
-
-
-
-
-
-
-
-
-% \textbf{Model View Definition XML (mvdXML)}...
-
-
-
-
-
-
-
-
-
-% \textbf{City Geography Markup Language (CityGML)}...
-
-
-
-
-
-% The scope of the research interest includes a small, but central part among plenty of structured data models used in the AEC/FM industry.
-
-% Currently, the AEC/FM industry plenty of structured data models, which have schemas specified in different definition languages and which can be serialised in multiple formats.
-
-
-
-    
-
-
-
-
-
-
-% \subsubsection{Typical examples}\label{building-data-formats-examples}
-
-
-% Currently, the AEC/FM industry uses plenty of structured data models, which have schemas specified in different definition languages and which can be serialised in multiple formats.
-% Below are superficial introductions of several open and commonly used data models, with focus to the "pure" data content.
-% % data, but not the application level.
-% As can be seen, only few conceptual data models already involve many schema definition languages and serialization formats.
-
-
-
-
-
-
-
-% ...
-
+\textbf{COBie (Construction Operations Building Information Exchange)} is an international standard specification of information exchange to capture data during design, construction, and commissioning for handover to facility management \cite{bentley2013cobie, east2007construction}.
+COBie, first was published by US Army Corps of Engineer in 2007 and today is jointly maintained by several buildingSMART organizations \cite{day2014problem, karlshoj2016delivering}.
+COBie-compliant information can be delivered in four formats: COBie Spreadsheet XML, IFC-SPF, IFC-XML, and COBieLite RC 4 (XML).
+COBie Spreadsheet XML, based on SpreadsheetML, is the most common format used by practitioners because it is editable with spreadsheet tools.
+IFC-SPF and IFC-XML are used for the delivery of COBie data via IFC, consisting of two steps: (1) the exploration of the native model in IFC format, and (2) the transformation of the IFC model in COBie spreadsheet format \cite{karlshoj2016delivering}. 
+As pointed out in \cite{yalcinkaya2015examining}, although "IFC is not all-in-one and the only source for the information requested in COBie specification", it "can be considered as the most convenient source for COBie extraction".
+COBieLite is a new NIEM-conformant (National Information Exchange Model) XML format designed to support lightweight COBie information exchanges with Web Services.
+Relationships between entities in this format are explicitly defined with XSD and it is free of unnecessary data about spreadsheets, text style and so on \cite{bogen2015cobielite}.
+While COBieLite is still under development, the other three formats are officially approved in the British Standard BSI1192-4:2014 about making COBie mandatory for public commissions in UK from April 2016 \cite{karlshoj2016delivering}.
 
 
 
