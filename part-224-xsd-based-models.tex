@@ -1,8 +1,99 @@
+\begin{table*}[h]\footnotesize
+    \centering
+    \caption{Contents and declaration methods of XML elements}
+    \label{tab:xml-elements}
+    
+    \rowcolors{3}{white}{lightgray}    
+
+    \begin{tabu} to \textwidth { l | c c c | X }
+        \hline
+            XML element             &   Text    &   Elements    &   Attributes      &   Declaration method     \\
+                                    % &   Text    &   Elements    &   Attributes      &                    \\
+        \hline
+            Simple                  &   Yes     &   No          &   No              &   \texttt{xs:simpleType}                       \\
+            Complex empty           &   No      &   No          &   Yes             &   \texttt{xs:complexType} + [\texttt{xs:complexContent}] + attributes \\
+            Complex text-only       &   Yes     &   No          &   Yes             &   \texttt{xs:complexType} + \texttt{xs:simpleContent}  + attributes \\
+            Complex element-only    &   No      &   Yes         &   Yes             &   \texttt{xs:complexType} + [\texttt{xs:complexContent}] + elements + attributes \\
+            Complex mixed           &   Yes     &   Yes         &   Yes             &   \texttt{xs:complexType} + [\texttt{xs:complexContent}] + \newline \texttt{mixed} flag + elements + attributes \\
+        \hline
+    \end{tabu}
+\end{table*}
+
 \subsubsection{XSD-based data models}\label{sec:xsd-based-data-models}
 
+\paragraphx{\\XML elements and XSD types}
+
+Similarly to EXPRESS-based data models, a XSD-based data model is described using one or more interrelated XSD schemas.
+Each schema is a kept in a separate document and then the document can be imported by other XSD schemas or XML documents.
+For instance, the CityGML data model consists of many XSD schemas, which address specific subdomains such as bridge, building, city furniture, land use, tunnel, etc.
+These schemas import other base XSD schemas, such as GML and CityGMLBase.
 
 
-\noindent\textbf{XSD schema structure}
+
+An XML schema contains declarations of XML elements, their attributes, and related types.
+There are two kinds of XML elements: simple and complex.
+\emph{Simple elements} can only have text, whereas \emph{complex elements} can contain text, elements, and attributes.
+Complex elements also have four subkinds: empty, text-only, elements-only, and mixed.
+\autoref{tab:xml-elements} describes possible contents and declaration methods of XML elements to facilitate their recognition.
+
+
+
+
+
+
+% \begin{table}\footnotesize
+%     \centering
+%     \caption{Kinds of XML elements}
+%     \label{tab:xml-elements}
+    
+%     \rowcolors{2}{white}{lightgray}    
+    
+%     \begin{tabu} to \columnwidth { X c c c }
+%         \hline
+%             XML element             &   Text    &   Elements    &   Attributes  \\
+%         \hline
+%             Simple                  &   Yes     &   No          &   No          \\
+%             Complex Empty           &   No      &   No          &   Yes         \\
+%             Complex Text-only       &   Yes     &   No          &   Yes         \\
+%             Complex Element-only    &   No      &   Yes         &   Yes         \\
+%             Complex Mixed           &   Yes     &   Yes         &   Yes         \\
+%         \hline
+%     \end{tabu}
+% \end{table}
+
+
+
+As can be seen in \autoref{tab:xml-elements}, there are two XSD types.
+\emph{Simple types} (\texttt{xs:simpleType}) are used for declaring simple elements or attributes, which only have text content.
+\emph{Complex types} (\texttt{xs:complexType}) are applied only for complex elements.
+
+XSD allows to specify a simple type as a list (\texttt{xs:list}) of another simple type, or as a union (\texttt{xs:union}) of other simple types.
+Moreover, XSD provides multiple restrictions (\texttt{xs:restriction}) for simple types:
+\begin{itemize}
+    \item \texttt{enumeration} defines a list of acceptable values.
+    \item \texttt{length}, \texttt{min\-Length}, and \texttt{max\-Length} define a number of string characters or list items.
+    \item \texttt{min\-Inclu\-sive}, \texttt{max\-Inclu\-sive}, \texttt{min\-Exclu\-sive}, and \texttt{max\-Exclu\-sive} define lower and upper bounds for numeric values.
+    \item \texttt{pattern} defines a character pattern for string values.
+    \item \texttt{totalDigits} and \texttt{fractionDigits} define numbers of digits in total and after the decimal point allowed in a number.
+\end{itemize}
+
+
+
+Complex types can include the following declarations: element (\texttt{xs:element}), element group (\texttt{xs:group}), attribute (\texttt{xs:attribute}), attribute group (\texttt{xs:attri\-bute\-Group}), \emph{any}-element (\texttt{xs:any}), and \emph{any}-attribute (\texttt{xs:anyAttribute}).
+Any-elements and any-attributes are elements and attributes undefined by the schema.
+Elements in a complex type or a element group must be defined with exact one of \emph{order indicators}:
+(i) \texttt{sequence} allows child elements to occur in any order;
+(ii) \texttt{all} allows child elements to occur in the order as defined;
+and (iii) \texttt{choice} allows only one of the child elements to occur.
+Regardless of which order indicator is used, elements can be specified with \texttt{min\-Occurs}, \texttt{max\-Occurs} and \texttt{nillable} attributes.
+Unlike elements of a complex type, attributes may occur in an element no more than once.
+However, attributes can be declared as \texttt{optional} or \texttt{required}.
+
+
+\bigskip\paragraphx{XSD type hierarchy}
+
+
+
 
 
 

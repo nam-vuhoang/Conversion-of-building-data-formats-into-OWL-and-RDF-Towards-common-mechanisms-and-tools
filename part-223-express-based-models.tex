@@ -1,6 +1,6 @@
 \subsubsection{EXPRESS-based data models}\label{sec:express-based-data-models}
 
-\noindent\textbf{EXPRESS Schema structure}
+\paragraphx{EXPRESS schema structure}
 
 An EXPRESS-based data model is specified with one or more interrelated schemas.
 Each schema is a unit or module within the whole EXPRESS model that addresses a specific subdomain of the model.
@@ -30,7 +30,7 @@ However, their local rules and derived attributes, in addition to the rest part 
 % \end{lstlisting}
 
 
-\noindent\textbf{EXPRESS data types}
+\paragraphx{EXPRESS data types}
 
 There are six groups of data types in EXPRESS, namely \emph{simple} (\emph{primitive})\footnote{
     In EXPRESS documentation built-in primitive data types are called \emph{simple types}.
@@ -169,21 +169,21 @@ END_TYPE;
 
 \begin{table}\footnotesize
     \centering
-    \caption{Aggregation types}
+    \caption{Aggregation kinds}
     \label{tab:express-aggregation-types}
     
     \rowcolors{2}{white}{lightgray}    
     
-    \begin{tabulary}{\columnwidth}{XXXX}
+    \begin{tabu} to \columnwidth { l c c X[c] }
         \hline
-                            &   Ordered & Fixed size    & Item duplication allowed  \\
+            Kind     &   Ordered & Fixed size    & Item duplication allowed  \\
         \hline
             \texttt{ARRAY}  &   yes     & yes           & yes (by default)          \\
             \texttt{LIST}   &   yes     & no            & yes (by default)          \\
             \texttt{SET}    &   no      & no            & no                        \\
             \texttt{BAG}    &   no      & no            & yes                       \\
         \hline
-    \end{tabulary}
+    \end{tabu}
 \end{table}
 
 
@@ -398,7 +398,7 @@ END_ENTITY;
 
 
 
-\noindent\textbf{STEP-File structure}
+\paragraphx{STEP-File structure}
 
 A STEP-file includes of a header and a data sections, which serve as sets of entities, i.e. instances of entity types.
 Entities of the header section contain metadata about the dataset.
@@ -505,7 +505,7 @@ DATA;
 \end{lstlisting}
 
 
-\noindent\textbf{IFC-EXPRESS schemas and IFC-SPF datasets}
+\paragraphx{IFC-EXPRESS schemas and IFC-SPF datasets}
 
 IFC-EXPRESS schemas and IFC-SPF datasets inherit all properties of EXPRESS and STEP-File.
 However, there are several specific features must be highlighted.
@@ -565,10 +565,10 @@ Discomforts caused by this character is discussed in \ref{}.
 
 
 \begin{lstlisting}[caption={IFC-GUID Base-64 character encoding mapping},label=lst:express-guid-encoding]
-0         1         2         3         
-0123456789012345678901234567890123456789
-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
-4         5         6
-012345678901234567890123
-efghijklmnopqrstuvwxyz_$
+0         1         2         3         4         
+01234567890123456789012345678901234567890123456789
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn
+5         6
+01234567890123
+opqrstuvwxyz_$
 \end{lstlisting}

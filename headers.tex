@@ -12,7 +12,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%
+% PARAGRAPH TITLE
+%
+% \newcommand{\paragraphx}[1]{\paragraph{\textnormal{\textbf{#1}\\}}}
+\newcommand{\paragraphx}[1]{\noindent{\textnormal{\textbf{#1}}}\nopagebreak{}}
+
+
+
+
+
+\usepackage{tabularx}
 \usepackage{tabulary}
+\usepackage{tabu}
 \usepackage{multirow}
 % \usepackage{booktabs} % provides \toprule, \midrule, \bottomrule for table
 
@@ -105,6 +117,15 @@ breakautoindent=true}
 \newcommand{\CS}{C\nolinebreak\hspace{-.05em}\raisebox{.6ex}{\scriptsize\bf \#}}
 
 
+
+
+
+
+%
+% PAGE ORIENTATION
+%
+% \usepackage{pdflscape}
+% \usepackage{blindtext}
 
 
 
