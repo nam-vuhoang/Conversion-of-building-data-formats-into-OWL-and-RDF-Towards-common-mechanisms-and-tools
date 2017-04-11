@@ -1,30 +1,41 @@
 \subsubsection{EXPRESS-based data models}\label{sec:express-based-data-models}
 
-\noindent\textbf{Data schemas}
+\noindent\textbf{EXPRESS Schema structure}
 
 An EXPRESS-based data model is specified with one or more interrelated schemas.
-A schema is a unit or module within the whole EXPRESS model that addresses a specific subdomain of the model and may import another schema of the same model.
-A schema consists of different kinds of declarations (see Listing \ref{lst:express-schema-declarations}).
-% However, the import and constant declarations are currently unused in the IFC-EXPRESS data schemas.
-However, as mentioned in \autoref{sec:scope-of-interest} functions (defined with keyword \texttt{FUNCTION}), procedures (\texttt{PROCEDURE}), global rules (\texttt{RULE}), as well as types constraints (\texttt{WHERE}) and derived attributes (\texttt{DERIVE}) are out of consideration.
-Data type declarations (\texttt{TYPE} and \texttt{ENTITY}) \textit{without} constraints and derived attributes are discussed below.
+Each schema is a unit or module within the whole EXPRESS model that addresses a specific subdomain of the model.
+It may import other schemas and use built-in data types and structures.
+An EXPRESS schema consists of import, constant, non-entity data type, entity data type, function, procedure, and global rule declarations, which are accordingly specified with keywords \texttt{IMPORT}, \texttt{CONSTANT}, \texttt{TYPE}, \texttt{ENTITY}, \texttt{FUNCTION}, and \texttt{RULE}.
+Data type declarations can include declarations of local rules, defined with keyword \texttt{WHERE}.
+Besides, entity data type declarations also include declarations of their super and sub types (keywords \texttt{SUBTYPE OF} and \texttt{SUPERTYPE OF}), explicit (no keyword used), derived (\texttt{DERIVE}), and inverse (\texttt{INVERSE}) attributes.
 
-\begin{lstlisting}[caption={The structure of an EXPRESS schema.},label=lst:express-schema-declarations]
-SCHEMA IFC4;
-  [import declarations]
-  [constant declarations]
-  [type declarations]
-  [function declarations]
-  [procedure declarations]
-  [rule declarations]
-SCHEMA;
-\end{lstlisting}
+Built-in and declared data types are described below.
+However, their local rules and derived attributes, in addition to the rest part of EXPRESS schemas, are out of consideration because:
+\begin{itemize}
+    \item Rules and derived attributes, as well as functions and procedures contain computing instructions and mathematical operations, which (a) cannot be converted into OWL 2 profiles and (b) are not contained in datasets when exchanging data.
+    \item Import and constant declarations are not used in current IFC-EXPRESS schemas. Moreover, they are poorly described in literature, so it is hard to describe their precise characteristics.
+\end{itemize}
 
 
 
+% \begin{lstlisting}[caption={The structure of an EXPRESS schema.},label=lst:express-schema-declarations]
+% SCHEMA IFC4;
+%   [import declarations]
+%   [constant declarations]
+%   [type declarations]
+%   [function declarations]
+%   [procedure declarations]
+%   [rule declarations]
+% SCHEMA;
+% \end{lstlisting}
+
+
+\noindent\textbf{EXPRESS data types}
 
 There are six groups of data types in EXPRESS, namely \emph{simple} (\emph{primitive})\footnote{
-    To avoid confusion between \emph{EXPRESS simple types}, which are built-in primitive types, and \emph{XSD simple types}, which can be built-in primitive, built-in derived, enumeration, or other types, in this paper EXPRESS simple types are called as \emph{primitive types}.
+    In EXPRESS documentation built-in primitive data types are called \emph{simple types}.
+    However, in XSD terminology, \emph{simple types} can be built-in primitive, built-in derived, enumeration, and even union types.
+    To avoid confusion, in this paper EXPRESS simple types are refered as \emph{primitive types}.
 }, \emph{entity}, \emph{enumeration}, \emph{select}, \emph{aggregation}, and \emph{defined}.
 
 % 
@@ -32,18 +43,25 @@ There are six groups of data types in EXPRESS, namely \emph{simple} (\emph{primi
 % 
 \emph{Primitive data types} are seven built-in types, including \texttt{IN\-TE\-GER}, \texttt{REAL}, \texttt{NUM\-BER}, \texttt{STRING}, \texttt{BI\-NA\-RY}, \texttt{BOOL\-EAN}, and \texttt{LOG\-I\-CAL}.
 
-EXPRESS \texttt{INTEGER} and \texttt{REAL} values can have in principle any length and accuracy, but most implementations restricted them to signed 32-bit integers
+\texttt{INTEGER} and \texttt{REAL} values can have in principle any length and accuracy, but most implementations restricted them to signed 32-bit integers
 % (equivalent to XSD type \texttt{xs:int})
 and floating point doubles.
 % (\texttt{xs:double}).
-Type \texttt{NUM\-BER} is a super type of \texttt{IN\-TE\-GER} and \texttt{REAL}.
+Type \texttt{NUM\-BER} is the union of types \texttt{IN\-TE\-GER} and \texttt{REAL}.
 
 \texttt{STRING} values are finite-length sequences of Unicode (ISO/IEC 10646) characters.
 \texttt{BINARY} values are arrays of bits.
-Types \texttt{STRING} and \texttt{BINARY} can be specified together with maximum size (see \autoref{lst:express-primitive-types}).
-By default, \texttt{STRING} can have any length, \texttt{BINARY} is limited to 32 bit.
+Types \texttt{STRING} and \texttt{BINARY} can be additionally specified with fixed or maximum lengths (see \autoref{lst:express-primitive-types}).
+By default, \texttt{STRING} can have any length, while \texttt{BINARY} is limited to 32 bit.
 
-\begin{lstlisting}[caption={Examples of \texttt{STRING} and \texttt{BINARY} types with maximum size.},label=lst:express-primitive-types]
+
+\begin{lstlisting}[caption={Examples of \texttt{STRING} and \texttt{BINARY} types with default, fixed, and maximum lengths.},label=lst:express-primitive-types]
+TYPE IfcLabel = STRING;
+END_TYPE;
+
+TYPE IfcBinary = BINARY;
+END_TYPE;
+
 TYPE IfcGloballyUniqueId = STRING(22) FIXED;
 END_TYPE;
 
@@ -59,14 +77,18 @@ END_ENTITY;
 
 
 Type \texttt{BOOL\-EAN} with two fixed values \texttt{TRUE} and \texttt{FALSE} is used for traditional Boolean (two-valued) logic.
-Type \texttt{LOG\-I\-CAL} has three predefined values: \texttt{TRUE},  \texttt{FALSE}, and \texttt{UNKNOWN}, and it is needed for trivalent (three-valued) logics (3VL).
-It is worth mentioning that there many 3VLs \cite{fronthofer2011manyvaluedlogics}, which have different numerical representations for the set of truth values \{\texttt{FALSE}, \texttt{UNKNOWN}, \texttt{TRUE}\}, for instance, \{-1, 0, +1\} (Kleene and Priest logics), \{-1, 0, 0/1\} (redundant binary representation), \{0, 1, 2\} (ternary numeral system), and so on.
-In contrast, set \{\texttt{FALSE}, \texttt{TRUE}\} in Boolean algebra is always equivalent to \{0, 1\}.
-Therefore, it is not recommended to convert interrelated types \texttt{BOOLEAN} and \texttt{LOGICAL} to number types like in \CPP{} programming language.
+In contrast, type \texttt{LOG\-I\-CAL} has three predefined values \texttt{TRUE},  \texttt{FALSE}, and \texttt{UNKNOWN}, and it is needed for trivalent (three-valued) logics (3VL) \cite{fronthofer2011manyvaluedlogics}.
+It is worth mentioning that in some programming languages, such as \CPP{}, Boolean values are represented as integers $0$ and $1$.
+However, many 3VLs use different numerical representations.
+In particular, set $ \{\texttt{FALSE}, \texttt{UNKNOWN}, \texttt{TRUE}\} $ can be represented as
+$ \{-1, 0, +1\} $ in Kleene and Priest logics,
+$ \{-1, 0, 0/1\} $ in the redundant binary representation (RBR), 
+or $ \{0, 1, 2\} $ in the ternary numeral system.
+Since types \texttt{BOOLEAN} and \texttt{LOGICAL} are interrelated, it is not recommended to convert any of them to number types.
 
 
 \emph{Enumeration data types} represent fixed sets of possible string values.
-Different enumeration types may have similar values, for instance, both types \texttt{IfcAddressTypeEnum} and \texttt{IfcColumnTypeEnum} have value \texttt{USERDEFINED} (see \autoref{lst:express-enum-types}).
+Different enumeration types may have similar values, for instance, types \texttt{IfcAddressTypeEnum} and \texttt{IfcColumnTypeEnum} both have value \texttt{USERDEFINED} (see \autoref{lst:express-enum-types}).
 
 
 \begin{lstlisting}[caption={Printout of enumeration types \texttt{IfcAddressTypeEnum} and \texttt{IfcColumnTypeEnum}.},label=lst:express-enum-types]
@@ -80,10 +102,11 @@ END_TYPE;
 \end{lstlisting}
 
 
-\emph{Select data types} are unions of other data types, usually non-primitive ones.
-Underlying data types of a select type can be very different to each other.
-For instance, select type \texttt{IfcTrimmingSelect} is union of entity type \texttt{IfcCartesianPoint} and defined type \texttt{IfcParameterValue}.
-
+\emph{Select data types} are unions of other \emph{non-primitive} data types.
+Select types and their underlying types can be considered as supertypes and subtypes.
+Primitive types can be used as underlying for select types only through defined types (see below).
+The kinds of the underlying types of one select type can be different to each other.
+For instance, select type \texttt{IfcTrimmingSelect} is the union of \emph{entity} type \texttt{IfcCartesianPoint} and \emph{defined} type \texttt{IfcParameterValue}, which refers to primitive type \texttt{REAL} (see \autoref{lst:express-select-types}).
 
 
 \begin{lstlisting}[caption={Printout of select type \texttt{IfcTrimmingSelect} and its underlying types.},label=lst:express-select-types]
@@ -106,19 +129,15 @@ END_TYPE;
 
 
 
-\emph{Aggregation data types} are \emph{unnamed} containers of values of exactly \emph{one} other data type
-\footnote{In other data models, aggregation data usually consist of values from different types.}.
-In other words, they like collection types in Java or C{\#} programming languages.
-There are four types of aggregation: \texttt{ARRAY} (ordered, defined with start and end indexes), \texttt{LIST} (ordered, defined with minimum and maximum cardinalities), \texttt{SET} (unordered, all values are unique), and \texttt{BAG} (unordered, no duplicated values).
-However, \texttt{BAG} aggregation types are most likely never used in practice.
-\texttt{LIST} and \texttt{SET} aggregations can have unlimited maximum cardinality.
-
-
-
-\emph{Defined} or \emph{named} data types are used to \emph{name} and add constraints to another data type.
-For instance, type \texttt{Ifc\-Length\-Measure} is defined to assign a meaningful name to the simple type \texttt{REAL} (see \autoref{lst:express-defined-types}).
-Type \texttt{Ifc\-Positive\-Length\-Measure} is defined to restrict \texttt{Ifc\-Length\-Measure} to be positive and add a corresponding name.
+\emph{Defined} data types are used for giving meaningful names and adding constraints to another data type when needed.
+That is why \emph{defined} types are sometimes called \emph{named}.
+For instance, type \texttt{Ifc\-Length\-Measure} is defined to assign a meaningful name to primitive type \texttt{REAL} (\autoref{lst:express-defined-types}).
+Type \texttt{Ifc\-Positive\-Length\-Measure} is defined to restrict \texttt{Ifc\-Length\-Measure} with positive values.
 Types \texttt{Ifc\-Complex\-Number} and \texttt{Ifc\-Compound\-Plane\-Angle\-Measure} are defined to identify unnamed aggregation types and also add some constraints.
+
+In general, the relationship between a data type and its underlying type also can be considered as subtype and supertype.
+For instance, \texttt{IfcPositiveLengthMeasure} is a subtype of \texttt{IfcLengthMeasure}, which in turn is equivalent to \texttt{REAL}; type \texttt{IfcCompoundPlaneAngleMeasure} is a subtype of \texttt{LIST [3:4] OF INTEGER}.
+
 
 
 \begin{lstlisting}[caption={Printout of several defined data types},label=lst:express-defined-types]
@@ -135,101 +154,150 @@ END_TYPE;
 
 TYPE IfcCompoundPlaneAngleMeasure = LIST [3:4] OF INTEGER;
  WHERE
-    MinutesInRange : ABS(SELF[2]) < 60;
-    SecondsInRange : ABS(SELF[3]) < 60;
-    MicrosecondsInRange : (SIZEOF(SELF) = 3) OR (ABS(SELF[4]) < 1000000);
-    ...
+   MinutesInRange : ABS(SELF[2]) < 60;
+   SecondsInRange : ABS(SELF[3]) < 60;
+   MicrosecondsInRange : (SIZEOF(SELF) = 3) OR (ABS(SELF[4]) < 1000000);
+   ...
+END_TYPE;
+
+TYPE IfcBoxAlignment = IfcLabel;
+ WHERE
+   WR1 : SELF IN ['top-left', 'top-middle', 'top-right', 'middle-left', 'center', 'middle-right', 'bottom-left', 'bottom-middle', 'bottom-right'];
 END_TYPE;
 \end{lstlisting}
 
-% TYPE IfcBoxAlignment = IfcLabel;
-%  WHERE
-% 	WR1 : SELF IN ['top-left', 'top-middle', 'top-right', 'middle-left', 'center', 'middle-right', 'bottom-left', 'bottom-middle', 'bottom-right'];
-% END_TYPE;
 
-% TYPE IfcLabel = STRING(255);
-% END_TYPE;
-
-
+\begin{table}\footnotesize
+    \centering
+    \caption{Aggregation types}
+    \label{tab:express-aggregation-types}
     
-
-
-
-
-
-
-
-
-
-
+    \rowcolors{2}{white}{lightgray}    
     
+    \begin{tabulary}{\columnwidth}{XXXX}
+        \hline
+                            &   Ordered & Fixed size    & Item duplication allowed  \\
+        \hline
+            \texttt{ARRAY}  &   yes     & yes           & yes (by default)          \\
+            \texttt{LIST}   &   yes     & no            & yes (by default)          \\
+            \texttt{SET}    &   no      & no            & no                        \\
+            \texttt{BAG}    &   no      & no            & yes                       \\
+        \hline
+    \end{tabulary}
+\end{table}
 
-     
+
+
+\emph{Aggregation data types} are containers of values of exactly \emph{one} other data type
+\footnote{In other data models, aggregation data usually consist of values from different types.}.
+Aggregation data types can be assigned with names only by using defined types.
+There are four kinds of aggregation: \texttt{ARRAY}, \texttt{LIST}, \texttt{SET}, and \texttt{BAG} (see \autoref{tab:express-aggregation-types}).
+However, \texttt{BAG} types are most likely never used in practice.
+In general, aggregation types are analogous to \emph{collection types} in Java or C{\#} programming languages.
+Nevertheless, fixed-size \texttt{ARRAY} types are defined with both start and end indexes, unlike arrays in programming languages with the only size parameter.
+For example, type \texttt{IfcComplexNumber}, or rather its underlying aggregation type, is an array with indexes from 1 to 2 (see \autoref{lst:express-defined-types}).
+Variable-size \texttt{LIST}, \texttt{SET}, and \texttt{BAG} types also unlike collections in programming languages.
+They are defined with minimum and maximum cardinalities, where maximum cardinalities can be infinity.
+For instance, type \texttt{IfcCompoundPlaneAngleMeasure} is a list of 3 or 4 \texttt{INTEGER}s (see \autoref{lst:express-defined-types}).
+By default, indexed \texttt{ARRAY} and \texttt{LIST} types allow item duplication.
+However, EXPRESS allows declaring the uniqueness of items of specific \texttt{ARRAY} and \texttt{LIST} types (see \autoref{lst:express-aggregation-types}).
+
+
+\begin{lstlisting}[caption={Example of \texttt{LIST} type with unique items},label=lst:express-aggregation-types]
+ENTITY IfcTypeProduct
+ ...
+ RepresentationMaps : OPTIONAL LIST [1:?] OF UNIQUE IfcRepresentationMap;
+ ...	
+END_ENTITY;
+\end{lstlisting}
+
+
 
 % 
 % Entity data types
 % 
-\emph{Entity data types} are almost similar to classes in traditional object-oriented programming (OOP) languages, with a few exceptions:
-(i) they have no operations (methods);
-(ii) they have three kinds of attributes: explicit, derived and inverse;
-(iii) they contain rules (\texttt{WHERE}-constraints).
-\emph{Explicit attributes}, such as \texttt{IfcCompositeCurve.Segments} 
+\emph{Entity data types} are most important types in object-based EXPRESS schemas.
+They are almost similar to classes in traditional object-oriented programming (OOP) languages.
+However, they (i) have no methods, (ii) contain local rules (\texttt{WHERE}-constraints), 
+(iii) have three kinds of attributes, namely explicit, derived and inverse (see \autoref{lst:express-entity-types}),
+and (iv) have unique keys.
 
-are normal attributes, values of which must be serialised when data exchanging because they characterise their entities.
-Explicit attributes of an entity type can have any data type allowed in the data model.
-If the value type of an entity type attribute is another entity type then we can say that there is a directed association relationship between two entity types.
 
-The association relationship in the inverse direction is called \emph{inverse relationship}
-Assume that entity \texttt{a} of type \texttt{A} has attribute \texttt{x} which has entity type \texttt{B}.
-If value of an entity explicit attribute is another entity \texttt{a.x = b}
-
-then we can say that there is an association relationship between them.
-\emph{Inverse attributes} 
-
-\emph{Derived attributes} can be derived from other attributes of the same entity using formulas, which contain functions and mathematical operations.
-
-    
-    contain derived attributes and type constraints, which are outside the range of consideration, as explained above;
-    (iii) they have inverse attributes, which are similar to inverse properties in OWL (see Section ...).
-    
-    Like classes in Java and C{\#}, an entity data type has \emph{not more than one} super type.
-    However, attribute names of subtypes should not duplicate attribute names of their super types.
-    Nevertheless, there is no restrictions between attribute names in unrelated classes (it is important).
-    Each attribute has a certain data type, which can belong to any of the six data type groups.
-    In addition, the order of attribute declarations inside each entity data type is important because it is used for serialisation in the STEP-File format.
-    
-    
-    
 \begin{lstlisting}[caption={Examples of EXPRESS entity types},label=lst:express-entity-types]
 ENTITY IfcCompositeCurve
  SUPERTYPE OF (ONEOF
-    (IfcCompositeCurveOnSurface))
+   (IfcCompositeCurveOnSurface))
  SUBTYPE OF (IfcBoundedCurve);
-	Segments : LIST [1:?] OF IfcCompositeCurveSegment;
-	SelfIntersect : IfcLogical;
+   Segments : LIST [1:?] OF IfcCompositeCurveSegment;
+   SelfIntersect : IfcLogical;
  DERIVE
-	NSegments : IfcInteger := SIZEOF(Segments);
+   NSegments : IfcInteger := SIZEOF(Segments);
 	ClosedCurve : IfcLogical := Segments[NSegments].Transition <> Discontinuous;
  WHERE
-	CurveContinuous : ((NOT ClosedCurve) AND (SIZEOF(QUERY(Temp <* Segments | Temp.Transition = Discontinuous)) = 1))  = 0));
-	SameDim : SIZEOF( QUERY( Temp <* Segments | Temp.Dim <> Segments[1].Dim)) = 0;
+   CurveContinuous : ((NOT ClosedCurve) AND (SIZEOF(QUERY(Temp <* Segments | Temp.Transition = Discontinuous)) = 1))  = 0));
+   SameDim : SIZEOF( QUERY( Temp <* Segments | Temp.Dim <> Segments[1].Dim)) = 0;
 END_ENTITY;
 
 ENTITY IfcCompositeCurveSegment
  SUPERTYPE OF (ONEOF
-    (IfcReparametrisedCompositeCurveSegment))
+   (IfcReparametrisedCompositeCurveSegment))
  SUBTYPE OF (IfcGeometricRepresentationItem);
-	Transition : IfcTransitionCode;
-	SameSense : IfcBoolean;
-	ParentCurve : IfcCurve;
+   Transition : IfcTransitionCode;
+   SameSense : IfcBoolean;
+   ParentCurve : IfcCurve;
  DERIVE
-	Dim : IfcDimensionCount := ParentCurve.Dim;
+   Dim : IfcDimensionCount := ParentCurve.Dim;
  INVERSE
-	UsingCurves : SET [1:?] OF IfcCompositeCurve FOR Segments;
+   UsingCurves : SET [1:?] OF IfcCompositeCurve FOR Segments;
  WHERE
-	ParentIsBoundedCurve : ('IFC4.IFCBOUNDEDCURVE' IN TYPEOF(ParentCurve));
+   ParentIsBoundedCurve : ('IFC4.IFCBOUNDEDCURVE' IN TYPEOF(ParentCurve));
 END_ENTITY;
-\end{lstlisting}    
+\end{lstlisting}  
+
+
+\emph{Explicit attributes}, such as \texttt{Ifc\-Com\-po\-site\-Cur\-ve.Seg\-ments}, are normal attributes, values of which must be serialised when data exchanging, unlike derived and inverse attribute values.
+\emph{Derived attributes}, such as \texttt{IfcCompositeCurve.NSegments}, can be derived from other attributes using functions and mathematical operations.
+\emph{Inverse attributes} are used for \emph{bidirectional association relationships} between two entity types, where an explicit attribute of the first entity type stands for the direct relationship, and an inverse attribute of the second entity type stands for the inverse relationship.
+Inverse attributes always have \texttt{SET} types.
+Whereas, explicit attributes, which have according inverse attributes, may have either non-aggregation, or \texttt{SET}, or \texttt{LIST} type.
+However, the latter case is very rare and can be considered as a rule exception.
+For instance, explicit attribute \texttt{IfcCompositeCurve.Segments} has a \texttt{LIST} type, and its according inverse attribute \texttt{IfcCompositeCurveSegment.UsingCurves} has a \texttt{SET} type (see \autoref{lst:express-entity-types}).
+
+
+Each entity data type has not more than one super entity type, and it should not have attributes with same names as attributes of its super types.
+At the same time, attributes of two arbitrary entity types can be duplicated.
+In contrast, properties in OWL must have globally unique URIs.
+In addition, the order of attribute declarations inside each entity data type is strict because it is used for serialisation in the STEP-File format.
+
+
+
+EXPRESS language has two specific values: \texttt{NULL} and \texttt{ANY}.
+Only optional attributes declared with keyword \texttt{OPTIONAL} can have value \texttt{NULL}.
+An attribute, which has an aggregation type with zero minimum cardinality, may be not optional, and vice versa.
+For instance, optional attribute \texttt{IfcTypeProduct.RepresentationMaps} has \texttt{LIST} type with minimum cardinality equal \texttt{1}.
+
+
+Entity types may have unique keys, even more than one.
+Each unique key consists of one or more explicit attributes.
+For instance, type \texttt{IfcApplication} contain two unique keys \texttt{(ApplicationIdentifier)} and \texttt{(ApplicationFullName, Version)} (see \autoref{express-unique-keys}).
+
+
+\begin{lstlisting}[caption={},label=lst:express-unique-keys]
+ENTITY IfcApplication;
+	ApplicationDeveloper : IfcOrganization;
+	Version : IfcLabel;
+	ApplicationFullName : IfcLabel;
+	ApplicationIdentifier : IfcIdentifier;
+ UNIQUE
+	UR1 : ApplicationIdentifier;
+	UR2 : ApplicationFullName, Version;
+END_ENTITY;
+\end{lstlisting}
+
+
+    
+    
+  
     
     
     
@@ -297,32 +365,6 @@ END_ENTITY;
 % % In the same time simple data types \texttt{LOGICAL} and \texttt{BINARY} are translated into user defined types \texttt{ifc:lo\-gi\-cal} and \texttt{ifc:hex\-Bi\-na\-ry}.
 
 
-% In the IFC-EXPRESS schema, all data types for calendar and duration values are defined types, not included in EXPRESS (Listing \ref{lst:express-calendar-types}).
-
-% \begin{lstlisting}[caption={Examples of calendar-related data types},label=lst:express-calendar-types]
-% TYPE IfcTime = STRING;
-% END_TYPE;
-
-% TYPE IfcTimeMeasure = REAL;
-% END_TYPE;
-
-% TYPE IfcTimeStamp = INTEGER;
-% END_TYPE;
-
-
-% TYPE IfcDate = STRING;
-% END_TYPE;
-
-% TYPE IfcDateTime = STRING;
-% END_TYPE;
-
-% TYPE IfcDuration = STRING;
-% END_TYPE;
-
-
-
-% \end{lstlisting}
-
 
 % TODO: Add some example of an entity data type
 
@@ -356,69 +398,177 @@ END_ENTITY;
 
 
 
+\noindent\textbf{STEP-File structure}
+
+A STEP-file includes of a header and a data sections, which serve as sets of entities, i.e. instances of entity types.
+Entities of the header section contain metadata about the dataset.
+There are six entity types for the header section defined in a built-in EXPRESS schema (see \autoref{lst:step-metadata-schema}, copied from \cite{hafele2008ifcheader}).
+The data section contains instances of entities from the specific EXPRESS schema, the name of which (e.g. \texttt{'IFC2X3'}) is defined in the header section.
+
+
+\begin{lstlisting}[caption={The built-in EXPRESS schema for STEP metadata},label=lst:step-metadata-schema]
+TYPE time_stamp_text = STRING(256);
+END_TYPE;
+
+TYPE schema_name = STRING(1024);
+END_TYPE;
+
+ENTITY file_description;
+  description : LIST [1:?] OF STRING (256);
+  implementation_level : STRING (256);
+END_ENTITY;
+
+ENTITY file_name;
+  name : STRING (256);
+  time_stamp : time_stamp_text;
+  author : LIST [1:?] OF STRING (256);
+  organization : LIST [1:?] OF STRING (256);
+  preprocessor_version : STRING (256);
+  originating_system : STRING (256);
+  authorization : STRING (256);
+END_ENTITY;
+
+ENTITY file_schema;
+  schema_identifiers : LIST [1:?] OF UNIQUE schema_name;
+END_ENTITY;
+
+ENTITY file_population
+  ...
+ENTITY;
+
+ENTITY section_language
+  ...
+ENTITY;
+
+ENTITY section_context
+  ...
+ENTITY;
+\end{lstlisting}
+
+
+Common characteristics of STEP files are following (see example in \autoref{lst:step-file}):
+\begin{itemize}
+
+    \item An entity is represented with a case-insensitive type name and a list of attribute values.    
+    
+    \item Attribute names are not indicated because attribute values of each entity are located in a strict order as their attributes are declared inside the entity type.
+    
+    \item All data section entities have integer identifiers (IDs), which may be \texttt{0}.
+    Non-zero IDs (e.g. \texttt{\#1}) must be locally unique and can be used for referencing inside the dataset.
+    
+    \item String values are enclosed with apostrophe symbol (e.g. \texttt{'Pset\_WallCommon'}).
+    
+    \item Enumeration, boolean and logical values are enclosed with dot symbol, for instance, \texttt{.ADDED.}, \texttt{.F.} (equivalent to \texttt{.FALSE.}).
+    
+    \item Aggregation values are enclosed using open and close circle brackets, even if they have zero or one element, for example, \texttt{(\#20)} or \texttt{(0., 0., 0.)}.
+    
+    \item \texttt{REAL} values are represented in scientific notation (e.g. \texttt{1.745E-2}). 
+
+    \item Primitive values of attributes with select types must be specified together with the concrete non-select type name.
+    For instance, attribute \texttt{IfcMeasureWithUnit.ValueComponent} has select type \texttt{IfcValue} and value \texttt{IFCPLANEANGLEMEASURE(1.745E-2)}, where defined type \texttt{IfcPlaneAngleMeasure} is one of specific underlying types of select type \texttt{IfcValue}.
+    
+    \item Special values \texttt{NULL} and \texttt{ANY} are accordingly denoted with symbols \texttt{\$} and \texttt{*}.
+    
+    
+\end{itemize}
 
 
 
 
+\begin{lstlisting}[caption={Fragment of a STEP-File},label=lst:step-file]
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION (('ViewDefinition [CoordinationView, QuantityTakeOffAddOnView]'), '2;1');
+FILE_NAME ('example.ifc', '2008-08-01T21:53:56', 
+  ('Architect'), ('Building Designer Office'));
+FILE_SCHEMA (('IFC2X3'));
+ENDSEC;
+
+DATA;
+#1 = IFCPROJECT('0Yvc$VUKr0kugbFTf53O9L', #2, 'Project 1', $, $, $, $, (#20), #7);
+#2 = IFCOWNERHISTORY(#3, #6, $, .ADDED., $, $, $, 1217620436);
+...
+#7 = IFCUNITASSIGNMENT((#8, #9, #10, #11));
+#8 = IFCSIUNIT(*, .LENGTHUNIT., $, .METRE.);
+#9 = IFCSIUNIT(*, .AREAUNIT., $, .SQUARE_METRE.);
+...
+#13 = IFCMEASUREWITHUNIT(IFCPLANEANGLEMEASURE(1.745E-2), #14);
+...
+#20 = IFCGEOMETRICREPRESENTATIONCONTEXT($, 'Model', 3, 1.000E-5, #21, $);
+#21 = IFCAXIS2PLACEMENT3D(#22, $, $);
+#22 = IFCCARTESIANPOINT((0., 0., 0.));
+....
+#52 = IFCPROPERTYSET('18RtPv6efDwuUOMduCZ7rH', #2, 'Pset_WallCommon', $, (#56, #57, #58));
+#56 = IFCPROPERTYSINGLEVALUE('Combustible', 'Combustible', IFCBOOLEAN(.F.), $);
+#57 = IFCPROPERTYSINGLEVALUE('SurfaceSpreadOfFlame', 'SurfaceSpreadOfFlame', IFCTEXT(''), $);
+#58 = IFCPROPERTYSINGLEVALUE('ThermalTransmittance', 'ThermalTransmittance', IFCREAL(2.400E-1), $);
+\end{lstlisting}
+
+
+\noindent\textbf{IFC-EXPRESS schemas and IFC-SPF datasets}
+
+IFC-EXPRESS schemas and IFC-SPF datasets inherit all properties of EXPRESS and STEP-File.
+However, there are several specific features must be highlighted.
+
+Since there are no date, time, and duration types built in EXPRESS language, for these purposes IFC has its own types.
+They are defined types based on different primitive types.
+\texttt{IfcTime}, \texttt{IfcDate}, \texttt{IfcDateTime}, and \texttt{IfcDuration} are based on \texttt{STRING}, while \texttt{IfcTimeStamp} is based on \texttt{INTEGER}, and \texttt{IfcTimeMeasure} is based on \texttt{REAL} (see \autoref{lst:express-calendar-types}).
+\texttt{IfcTimeStamp} indicates date and time by measuring the number of seconds which have elapsed since the beginning of the year 1970.
+
+
+\begin{lstlisting}[caption={Examples of date, time and duration types},label=lst:express-calendar-types]
+TYPE IfcTime = STRING;
+END_TYPE;
+
+TYPE IfcDate = STRING;
+END_TYPE;
+
+TYPE IfcDateTime = STRING;
+END_TYPE;
+
+TYPE IfcDuration = STRING;
+END_TYPE;
+
+TYPE IfcTimeStamp = INTEGER;
+END_TYPE;
+
+TYPE IfcTimeMeasure = REAL;
+END_TYPE;
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={Definition and use of type \texttt{IfcGloballyUniqueId}},label=lst:express-guid]
+TYPE IfcGloballyUniqueId = STRING(22) FIXED;
+END_TYPE;
+
+ENTITY IfcRoot
+ ABSTRACT SUPERTYPE OF (ONEOF (IfcObjectDefinition, IfcPropertyDefinition ,IfcRelationship));
+   GlobalId : IfcGloballyUniqueId;
+   OwnerHistory : IfcOwnerHistory;
+   Name : OPTIONAL IfcLabel;
+   Description : OPTIONAL IfcText;
+ UNIQUE
+   UR1 : GlobalId;
+END_ENTITY;
+\end{lstlisting}
 
 
 
+IFC specifies a 22-character string type for short representations of Globally Unique Identifier (GUID) or Universal Unique Identifier (UUID) defined by ISO/IEC 11578:1996.
+To compress a 128-bit GUID number into a 22-character string, a base 64 character encoding map is used (see \autoref{lst:express-guid-encoding}). 
+However, this encoding map contains special character \texttt{\$}.
+Discomforts caused by this character is discussed in \ref{}.
 
-% % EXPRESS defines 
-
-
-% % According to terminology of EXPRESS, 
-
-% % , which are a bit different to the data models used traditional OOP (object-oriented programming) languages.
-% % In particular, an attribute in EXPRESS may have multiple values, similarly to properties in OWL and unlike class attributes in traditional OOP.
-% % Another difference is that lists and sets in EXPRESS may have both minimum and maximum cardinalities, again similarly to OWL.
-% % ...
-% % Tabular and relational data models are related with such terms as tables, rows and columns.
-% % And for that reason, spreadsheets also belong to this category.
+% , and that causes discomfort when use in the Web of Data.
+% For instance, RDF IRIs (Internationalized Resource Identifiers) (see ...) containing this symbol cannot be used in short forms with prefixes, which are most preferred in many serialization formats, query languages and Semantic Web tools.
 
 
 
-% % \begin{table}[!th]
-% %     \centering
-% %     \begin{tabular}{c|c|c|c}
-% %         \hline
-% %         Group & EXPRESS-bases & XSD-based & Tabular \& relational data \\
-% %         \hline
-% %         Data schema & IFC-EXPRESS & IFC-XSD & \\
-% %         \hline
-% %     \end{tabular}
-% %     \caption{Caption}
-% %     \label{tab:my_label}
-% % \end{table}
-
-
-
-
-
-
-
-
-
-
-% % Firstly, 
-
-% % , such as 
-
-
-
-
-% % The SPF-based formats are the data formats 
-
-
-
-
-
-
-
-
-% % , which, however, have similar properties.
-% % They are: SPF, 
-
-
-
-
+\begin{lstlisting}[caption={IFC-GUID Base-64 character encoding mapping},label=lst:express-guid-encoding]
+0         1         2         3         
+0123456789012345678901234567890123456789
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcd
+4         5         6
+012345678901234567890123
+efghijklmnopqrstuvwxyz_$
+\end{lstlisting}

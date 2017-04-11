@@ -1,12 +1,19 @@
 \subsubsection{Data model classification}\label{sec:data-model-classification}
 
-Our survey shows that industrial data models specified with the same schema language have many similarities, such as data types, data structures, and object patterns being used within them.
-Therefore, in order to facilitate data model analysis, all data models are divided into three groups, namely (1) EXPRESS-based data models, (2) XSD-based data models, and (3) Tabular and relational data models (see \autoref{tab:data-model-classification}).
+% Our survey shows that industrial data models specified with the same schema language have many similarities, such as data types, data structures, and object patterns being used within them.
+% Therefore, in order to facilitate data model analysis, all data models are divided into three groups, namely (1) EXPRESS-based data models, (2) XSD-based data models, and (3) Tabular and relational data models (see \autoref{tab:data-model-classification}).
+
+
+The vast majority of data models, used for data exchange in the AEC/FM industry, can be divided into three groups, namely (1) EXPRESS-based data models, (2) XSD-based data models, and (3) Tabular and relational data models (see \autoref{tab:data-model-classification}).
+Moreover, the analysis shows that data models, which belong to the same group, often use similar data types, data structures, and object patterns.
+
+
 
 
 \begin{table}\footnotesize
     \centering
     \caption{Data model classification}
+    \label{tab:data-model-classification}
     
     \rowcolors{2}{white}{lightgray}
     
@@ -36,7 +43,6 @@ Therefore, in order to facilitate data model analysis, all data models are divid
         \\
         \hline
     \end{tabulary}
-    \label{tab:data-model-classification}
 \end{table}
 
 
@@ -62,7 +68,10 @@ Another schema language for XML called RELAX NG (REgular LAnguage for XML Next G
 
 
 
-\textbf{3. Tabular and relational data models} have data represented in tabular form, i.e. tables with rows and columns.
+\textbf{3. Tabular and relational data models} have data structured in tabular form, i.e. tables with rows and columns.
+i.e. sets of rows, where each row cont
+
+
 While tabular data is stored in files, relational data is stored in relational data base management systems (RDBMS).
 
 Tabular data is exchanged in a variety of formats, such as CSV (comma-separated values) format, tab-delimited format, fixed field format, spreadsheets, HTML tables, and SQL dumps.
@@ -78,8 +87,7 @@ Relational data schema is specified with SQL....
 
 
 
-Below are short descriptions of data model examples mentioned in \autoref{tab:data-model-classification}.
-As can be seen, one conceptual model, such as IFC or COBie, can be related to several data model groups.
+Below are short descriptions of data model examples mentioned in \autoref{tab:data-model-classification} and explanations why one conceptual model, such as IFC or COBie, are related to several data model groups in the same time.
 
 
 \textbf{IFC (Industry Foundation Classes)} is a platform neutral and open product data model, and is the most extensively utilized collaboration data format in BIM.
