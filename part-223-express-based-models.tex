@@ -152,6 +152,9 @@ END_TYPE;
 TYPE IfcComplexNumber = ARRAY [1:2] OF REAL;
 END_TYPE;
 
+TYPE IfcPropertySetDefinitionSet = SET [1:?] OF IfcPropertySetDefinition;
+END_TYPE;
+
 TYPE IfcCompoundPlaneAngleMeasure = LIST [3:4] OF INTEGER;
  WHERE
    MinutesInRange : ABS(SELF[2]) < 60;

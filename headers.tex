@@ -1,11 +1,3 @@
-\usepackage[numbers]{natbib}% for bibliography sorting/compressing
-%\usepackage{amsmath}
-%\usepackage{endnotes}
-
-\usepackage{graphicx} % needed for command \includegraphics, also supports width
-
-%%%%%%%%%%% Put your definitions here
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % User-defined commands
@@ -28,15 +20,63 @@
 \usepackage{multirow}
 % \usepackage{booktabs} % provides \toprule, \midrule, \bottomrule for table
 
+% \usepackage{footnote}   % Add footnote for tabulars
+% \makesavenoteenv{tabular}
+% \usepackage{tablefootnote}
+
+% 
+% Table foot notes: http://tex.stackexchange.com/questions/1583/footnotes-in-tables
+% 
+\usepackage{enumitem}
+\usepackage{booktabs}
+% \usepackage{cfr-lm} % breaks texttt fonts
+\usepackage[referable]{threeparttablex}
+
+
+%
+% Fixes "Extra }, or forgotten \endgroup." error
+%
+% \usepackage{xpatch}
+% \makeatletter
+% \chardef\TPT@@@asteriskcatcode=\catcode`*
+% \catcode`*=11
+% \xpatchcmd{\threeparttable}
+%   {\TPT@hookin{tabular}}
+%   {\TPT@hookin{tabular}\TPT@hookin{tabu}}
+%   {}{}
+% \catcode`*=\TPT@@@asteriskcatcode
+% \makeatother
+
+
+%
+% Creating alphabetical table notes
+%
+\renewlist{tablenotes}{enumerate}{1}
+\makeatletter
+\setlist[tablenotes]{label=\tnote{\alph*},ref=\alph*,itemsep=\z@,topsep=\z@skip,partopsep=\z@skip,parsep=\z@,itemindent=\z@,labelindent=\tabcolsep,labelsep=.2em,leftmargin=*,align=left,before={\footnotesize}}
+\makeatother
+
+
+
+
 
 % \usepackage{geometry}
 \usepackage{color}
-\usepackage{colortbl} % needed for coloring table, see: https://texblog.org/2011/04/19/highlight-table-rowscolumns-with-color/
+% \usepackage{colortbl} % needed for coloring table, see: https://texblog.org/2011/04/19/highlight-table-rowscolumns-with-color/
 \usepackage[table]{xcolor} % needed for coloring table, see: https://en.wikibooks.org/wiki/LaTeX/Tables
 
+%
+% Fixes error when start row to be colored is ignored: http://tex.stackexchange.com/questions/297345/why-is-the-start-row-of-rowcolors-ignored-in-tabularx
+% 
+\newcounter{tblerows}
+\expandafter\let\csname c@tblerows\endcsname\rownum
+
+
 %\definecolor{name}{system}{definition}
-\definecolor{Gray}{gray}{0.9}
-\definecolor{LightCyan}{rgb}{0.88,1,1}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+
+
 
 
 
@@ -45,6 +85,9 @@
 
 %\usepackage{hyperref}
 \usepackage[draft]{hyperref} % defined as 'draft' to avoid error message http://tex.stackexchange.com/questions/1522/pdfendlink-ended-up-in-different-nesting-level-than-pdfstartlink
+
+
+% \renewcommand{\sectionautorefname}{\S}
 
 \usepackage{url}
 
@@ -76,17 +119,43 @@
 % language Ruby is used to enable comment lines started with hash character
 
 \lstset{language=Ruby,
-aboveskip=6pt,
-belowskip=6pt,
-backgroundcolor=\color[gray]{0.85},
-numberstyle=\scriptsize,
-basicstyle=\linespread{0.9}\ttfamily\scriptsize,
-% aboveskip={-4ex},
-numbers=none,
-stepnumber=1,
-frame=none,
-breaklines=true,
-breakautoindent=true}
+    aboveskip=6pt,
+    belowskip=6pt,
+    backgroundcolor=\color[gray]{0.88},
+    numberstyle=\scriptsize,
+    basicstyle=\linespread{0.9}\ttfamily\scriptsize,
+    % aboveskip={-4ex},
+    numbers=none,
+    stepnumber=1,
+    frame=none,
+    breaklines=true,
+    breakautoindent=true,
+    captionpos=t,                           % sets the caption-position to top
+    tabsize=2,                              % tab size in blank spaces
+}
+
+% \lstset{
+%   frame=top,
+%   frame=bottom,
+%   basicstyle=\linespread{0.9}\ttfamily\scriptsize,    % the size of the fonts that are used for the code
+%   backgroundcolor=\color[gray]{0.3},
+%   stepnumber=1,                           % the step between two line-numbers. If it is 1 each line will be numbered
+%   numbersep=10pt,                         % how far the line-numbers are from the code
+%   tabsize=2,                              % tab size in blank spaces
+%   extendedchars=true,                     %
+%   breaklines=true,                        % sets automatic line breaking
+%   captionpos=t,                           % sets the caption-position to top
+%   mathescape=true,
+%   stringstyle=\color{white}\ttfamily, % Farbe der String
+%   showspaces=false,           % Leerzeichen anzeigen ?
+%   showtabs=false,             % Tabs anzeigen ?
+%   xleftmargin=17pt,
+%   framexleftmargin=17pt,
+%   framexrightmargin=17pt,
+%   framexbottommargin=5pt,
+%   framextopmargin=5pt,
+%   showstringspaces=false      % Leerzeichen in Strings anzeigen ?
+%  }
 
 \AtBeginDocument{%
   \renewcommand{\thelstlisting}{\arabic{lstlisting}}
@@ -172,3 +241,14 @@ breakautoindent=true}
 \volume{0}
 \firstpage{1}
 \lastpage{1}
+
+
+
+\begin{document}
+
+
+
+
+% Added to enable emphased text hyphenation
+\sloppy
+
