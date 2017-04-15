@@ -87,7 +87,10 @@
 \usepackage[draft]{hyperref} % defined as 'draft' to avoid error message http://tex.stackexchange.com/questions/1522/pdfendlink-ended-up-in-different-nesting-level-than-pdfstartlink
 
 
-% \renewcommand{\sectionautorefname}{\S}
+%
+% Add paragraph symbol to section: https://tex.stackexchange.com/questions/127623/add-paragraph-symbol-to-section
+%
+\renewcommand{\sectionautorefname}{\S}
 
 \usepackage{url}
 
@@ -125,7 +128,7 @@
     numberstyle=\scriptsize,
     basicstyle=\linespread{0.9}\ttfamily\scriptsize,
     % aboveskip={-4ex},
-    numbers=none,
+    numbers=left,
     stepnumber=1,
     frame=none,
     breaklines=true,
@@ -191,10 +194,18 @@
 
 
 %
-% PAGE ORIENTATION
+% Landscape table
 %
 % \usepackage{pdflscape}
 % \usepackage{blindtext}
+
+\usepackage{pdflscape}
+\usepackage{afterpage}
+
+%
+% Alternative solution: Using sidewaystable: https://tex.stackexchange.com/questions/19017/how-to-place-a-table-on-a-new-page-with-landscape-orientation-without-clearing-t
+%
+\usepackage{rotating}
 
 
 

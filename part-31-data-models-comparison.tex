@@ -1,73 +1,177 @@
 \subsection{Data model comparison}\label{sec:data-model-comparison}
 
-In Section \ref{sec:background}, different data models used in the AEC/FM indsutry on the one hand and OWL 2 profiles from Semantic Web on the other hand were described.
-The common and different features of these data models are summarized in \autoref{tab:data-model-comparison}.
+All data models discussed in \autoref{sec:state-of-the-art} are driven not only by schema languages features, but also by related common practices.
+\autoref{tab:data-model-comparison} shows which main features are used in EXPRESS-driven and XSD-driven building data models, and how they are supported by OWL 2 profiles.
 
 % \blindtext
-
 % \thispagestyle{empty}
 % \begin{landscape}
-\begin{table*}[t]\footnotesize
+
+
+
+
+\begin{table*}[t]
+% \begin{sidewaystable}[t]
+\footnotesize
     \centering
     \caption{Data model comparison}
     \label{tab:data-model-comparison}
     
-    \rowcolors{2}{white}{lightgray}    
-    
-    \begin{tabularx}{\textwidth}{XXXXXXXXX}
-        \hline
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
-            Feature & EXPRESS   &   XSD &  Tabular  & Relational    &   OWL 2  & OWL 2 &    OWL 2   &   OWL 2 \\
+    % \rowcolors{4}{lightgray}{}    
 
-        \hline
-    \end{tabularx}
+    \begin{threeparttable}    
+        \begin{tabu} to \textwidth { X[0.5] X[0.6l] X[l] X[l] X[l] X[l] X[l] }            
+            \hline            
+                \multirow{2}{*}{\textbf{Features}}
+                & \multicolumn{2}{c|}{\textbf{Used in building data models}}
+                & \multicolumn{4}{c}{\textbf{Supported by OWL 2 profiles}}
+            \\    
+            \cline{2-7}            
+                & \multicolumn{1}{l}{\textbf{EXPRESS-}}
+                & \multirow{2}{*}{\textbf{XSD-driven}}
+                & \multirow{2}{*}{\textbf{OWL 2 EL}}
+                & \multirow{2}{*}{\textbf{OWL 2 QL}}
+                & \multirow{2}{*}{\textbf{OWL 2 RL}}
+                & \multirow{2}{*}{\textbf{OWL 2 DL}}
+            \\    
+                & \textbf{driven}    
+                &
+                &
+                &
+                &
+                &
+            \\    
+            \hline            
+            \hline
+                \multicolumn{7}{c}{\textbf{Primitive Types}}
+            \\
+            % \hline            
+                Decimals  % Feature  
+                
+                & \texttt{REAL}       % EXPRESS
+                
+                & \texttt{\textit{xs:decimal\tnotex{tn:rarely-used}}  \newline xs:double}      % XSD
+                
+                & \texttt{owl:real    \newline    owl:relational  \newline xsd:decimal}     % EL
+                
+                & \texttt{xsd:decimal \newline xsd:double}     % QL
+                
+                & \texttt{xsd:decimal \newline xsd:double}     % RL
+            
+                & \texttt{owl:real \newline owl:relational    \newline xsd:decimal \newline xsd:double}     % RL
+            \\
+            % \hline            
+                Integers    % Feature
+                
+                & \texttt{INTEGER}       % EXPRESS
+                
+                & \texttt{\textit{xs:int\tnotex{tn:rarely-used}} \newline xs:integer \newline xs:long \newline
+                \textit{xs:nonNegInt\tnotex{tn:xsd-nonNegInt}\tnotex{tn:rarely-used}}}  % XSD
+                
+                & \texttt{xsd:integer \newline xsd:nonNegInt\tnotex{tn:xsd-nonNegInt}}  % EL
+                
+                & \texttt{xsd:integer \newline xsd:nonNegInt\tnotex{tn:xsd-nonNegInt}}  % QL
+                
+                % & \texttt{xsd:int \newline xsd:integer \newline xsd:long \newline xsd:non\newline-Negative\newline-Integer}  % RL
+                & \texttt{xsd:int \newline xsd:integer \newline xsd:long \newline xsd:nonNegInt\tnotex{tn:xsd-nonNegInt}}  % RL
+                
+                & \texttt{xsd:int \newline xsd:integer \newline xsd:long \newline xsd:nonNegInt\tnotex{tn:xsd-nonNegInt}}  % DL
+            \\
+            % \hline            
+                Strings    % Feature
+                
+                & \texttt{STRING}       % EXPRESS
+                
+                & \texttt{\textit{xs:ID\tnotex{tn:rarely-used}  \newline xs:language\tnotex{tn:rarely-used}  \newline xs:NMTOKENS\tnotex{tn:rarely-used}}\newline
+                xs:normString\tnotex{tn:normString}  \newline    xs:string}      % XSD
+                
+                & \texttt{xsd:normString\tnotex{tn:normString}   \newline xsd:string}    % EL
+                
+                & \texttt{xsd:normString\tnotex{tn:normString}   \newline xsd:string}     % QL
+                
+                & \texttt{xsd:normString\tnotex{tn:normString}   \newline xsd:string}     % RL
+                
+                & \texttt{xsd:normString\tnotex{tn:normString}   \newline xsd:string}     % DL
+            \\
+            % \hline            
+                Booleans    % Feature
+                
+                & \texttt{BOOLEAN}       % EXPRESS
+                
+                & \texttt{xs:boolean}      % XSD
+                
+                & --\tnotex{no-built-in-support}    % EL
+                
+                & --\tnotex{no-built-in-support}     % QL
+                
+                & --\tnotex{no-built-in-support}     % RL
+                
+                & \texttt{xs:boolean}      % DL
+            \\
+            % \hline            
+                Logicals    % Feature
+                
+                & \texttt{LOGICAL}       % EXPRESS
+                
+                & as enumeration      % XSD
+                
+                & --\tnotex{no-built-in-support}    % EL
+                
+                & --\tnotex{no-built-in-support}     % QL
+                
+                & --\tnotex{no-built-in-support}     % RL
+                
+                & --\tnotex{no-built-in-support}      % DL
+            \\
+            % \hline            
+                Time \newline instances    % Feature
+                
+                & --\tnotex{no-built-in-support}       % EXPRESS
+                
+                & \texttt{xs:date \newline xs:dateTime \newline xs:time \newline xs:gYear}      % XSD
+                
+                & --\tnotex{no-built-in-support}    % EL
+                
+                & --\tnotex{no-built-in-support}     % QL
+                
+                & --\tnotex{no-built-in-support}     % RL
+                
+                & --\tnotex{no-built-in-support}      % DL
+            \\
+            % \hline            
+                Names \& IDs    % Feature
+                
+                & --\tnotex{no-built-in-support}       % EXPRESS
+                
+                & \texttt{xs:anyURI \newline xs:IDREF \newline xs:QName}      % XSD
+                
+                & \texttt{xs:anyURI}    % EL
+                
+                & \texttt{xs:anyURI}     % QL
+                
+                & \texttt{xs:anyURI}     % RL
+                
+                & \texttt{xs:anyURI}      % DL
+            \\
+            \hline
+        \end{tabu}
+        \begin{tablenotes}
+        %   \item\label{tn:xs-prefix} Types with prefixes \textit{xs:}
+          \item\label{tn:rarely-used} Rarely used.
+          \item\label{tn:a} Element declarations
+          \item\label{tn:xsd-nonNegInt} \texttt{nonNegativeInteger}
+          \item\label{tn:normString} \texttt{normalizedString}
+          \item\label{tn:logical} Three-value logical values
+          \item\label{no-built-in-support} No built-in support, requires special solutions
+        \end{tablenotes}
+    \end{threeparttable}    
 \end{table*}
+% \end{sidewaystable}
+
 % \end{landscape}
 
-% \blindtext
+
+
 
 
 % \subsection{Target criteria}
